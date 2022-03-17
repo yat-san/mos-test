@@ -1,6 +1,15 @@
 import styles from "./Select.module.scss";
 import {Icon} from "../../SVGsprite/Icon";
 import clsx from "clsx";
+import {ErrorMessage} from "../../ErrorMessage/ErrorMessage";
+
+/* Компонент простого селекта.
+*
+* Ожидамые пропсы:
+* - название (label);
+* - имя (name) и id;
+* - текст ошибки (errorMsg)
+*/
 
 export function SimpleSelect (props) {
     return (
@@ -8,20 +17,10 @@ export function SimpleSelect (props) {
             <label htmlFor={props.id}>
                 {props.label}
             </label>
-            <div aria-live={"polite"}>
-                {
-                    props.errorMsg &&
-                    <div className={"errorMessage"}>
-                        <Icon
-                            name={"icon-error"}
-                            sizeW={"20"}
-                            sizeH={"20"}
-                        />
-                        {props.errorMsg}
-                    </div>
-                }
-            </div>
+            <ErrorMessage id={props.id} errorMsg={props.errorMsg}/>
             <select
+                aria-labelledby={`${props.name}-descr`}
+                className={clsx({[styles.errorField]: props.errorMsg})}
                 name={props.name}
                 id={props.id}
                 onChange={

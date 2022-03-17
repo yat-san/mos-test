@@ -11,4 +11,12 @@
         font-weight: 600;
         margin-bottom: 0.5rem;
     }
+
+    select {
+        height: pxToRem(48);
+    }
+}
+
+.errorField {
+    border-color: $error;
 }

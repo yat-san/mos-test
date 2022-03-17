@@ -70,7 +70,7 @@ body {
         opacity: 1;
         top: 1.5rem;
         z-index: 100;
-        outline: 2px solid $primary;
+        outline: 2px solid $primary-base;
         outline-offset: 0;
     }
 }
@@ -110,16 +110,4 @@ hr {
     height: 1px;
     border: 0;
     background-color: $greyLight;
-}
-
-.errorMessage {
-    display: flex;
-    align-items: center;
-    color: $error;
-    margin: 0.5rem 0;
-    font-size: 1rem;
-
-    img, svg {
-        margin-right: 0.5rem;
-    }
 }

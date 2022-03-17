@@ -36,7 +36,7 @@ input, .input, textarea, select {
     background-color: #fff;
 
     &:focus {
-        border-color: $primary;
+        border-color: $primary-base;
     }
 
     @media (min-width: $medium) {
@@ -65,4 +65,17 @@ select {
     min-height: pxToRem(48);
     padding: 0.75rem;
     display: block;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    color: $error;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+
+    img, svg {
+        margin-right: 0.5rem;
+        flex-shrink: 0;
+    }
 }

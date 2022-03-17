@@ -6,10 +6,18 @@ import {CheckableInput} from "../FormElems/CheckableInput/CheckableInput";
 import {SimpleSelect} from "../FormElems/Select/SimpleSelect";
 import {Loader} from "../Loader/Loader";
 import {Icon} from "../SVGsprite/Icon";
+import {useEffect} from "react";
+import {Button} from "../Button/Button";
 
 /*
 * Запись на прием.
 * Управляется стейт машиной appointmentMachine.
+* Показ лоадера в момент получения данных.
+* Форма, когда данные получены.
+* Показ ошибок, если есть. Ошибки сбрасываются только при отправке на валидацию.
+* Экран успеха. Кнопка "Заново" перезагружает страницу.
+* Как следствие, всё возвращается в исходное состояние.
+*
 */
 
 export function Appointment () {
@@ -20,6 +28,13 @@ export function Appointment () {
         event.preventDefault();
         send({type: "SUBMIT"});
     };
+
+    useEffect(() => {
+        /* Если мы в состоянии "показать ошибки", ставим фокус на первое поле с ошибкой */
+        if (state.matches("filling.show_errors")) {
+            document.querySelector("[class*='errorField']")?.focus();
+        }
+    });
 
     return (
         <div className={styles.appointment}>
@@ -32,11 +47,6 @@ export function Appointment () {
                         <Loader label={"Загрузка"}/>
                     </div>
                 }
-
-                {
-                    state.matches("filling") &&
-                    <span className={"visuallyHidden"}>"Загружено"</span>
-                }
             </div>
             <h1>Запись на личный приём</h1>
 
@@ -45,6 +55,14 @@ export function Appointment () {
                 <form onSubmit={(event) => submit(event)}>
                     <h2>Данные о приёме</h2>
                     <p>Заполняются автоматически из Личного кабинета. Если хотите изменить данные, <a href={"#"} target={"_blank"}>отредактируйте профиль.</a></p>
+
+                    <div className={"visuallyHidden"} aria-live={"assertive"}>
+                        {
+                            state.matches("filling.show_errors")
+                                ? "Форма заполнена некорректно. Исправьте ошибки, чтобы продолжить."
+                                : ""
+                        }
+                    </div>
 
                     <SimpleSelect
                         label={"Заявитель"}
@@ -73,7 +91,6 @@ export function Appointment () {
                         sendType={"FILL_TEL"}
                         value={state.context.tel}
                     />
-
 
                     <fieldset className={"formGroup"}>
                         <legend>
@@ -115,6 +132,7 @@ export function Appointment () {
                         <a href="#">условия предоставления услуги</a>
                         .
                     </CheckableInput>
+
                     <CheckableInput
                         type={"checkbox"}
                         name={"processing"}
@@ -126,9 +144,7 @@ export function Appointment () {
                     />
 
                     <div className={"formGroup"}>
-                        <button type="submit" className={"btn btnPrimary"}>
-                            Продолжить
-                        </button>
+                        <Button type="submit" primary label={"Продолжить"}/>
 
                         <div aria-live={"assertive"}>
                             {
@@ -144,31 +160,28 @@ export function Appointment () {
 
             <section aria-live={"polite"}>
                 {
+                    /* Экран успеха */
                     state.matches("success") &&
 
                     <div className={styles.successScreen}>
-                        <h2><Icon name={"icon-success"} sizeH={40} sizeW={40}/> <br/>Заявка отправлена </h2>
+                        <h2>
+                            <Icon name={"icon-success"} sizeH={40} sizeW={40}/> <br/>
+                            Заявка отправлена
+                        </h2>
                         <p>Номер вашей заявки 7777-00120-6703-235/19.</p>
 
                         <p>На&nbsp;электронную почту, указанную в&nbsp;заявке, придёт подтверждение с&nbsp;указанием времени приёма, а&nbsp;перед приёмом — инструкция по&nbsp;подключению. Если
                            у&nbsp;вас возникнут вопросы, задайте&nbsp;их по&nbsp;                   телефону: <a href={"tel:+71234567890"}>+7 123 456-78-90</a>.
                         </p>
 
-
-                        <button
-                            type={"button"}
-                            className={"btn btnPrimary"}
-                            onClick={() => send({type: "ONE_MORE"})}
-                        >
-                            В начало
-                        </button>
-
+                        <Button
+                            secondary
+                            onClick={() => window.location.reload()}
+                            label={"Заново"}
+                        />
                     </div>
                 }
-
-
             </section>
-
         </div>
     );
 }

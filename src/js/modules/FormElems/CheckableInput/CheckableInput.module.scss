@@ -41,11 +41,11 @@
         min-height: 100%;
 
         &:checked label::before {
-            border-color: $primary;
+            border-color: $primary-base;
         }
 
         &:focus + label::before {
-            outline: medium solid $primaryLight;
+            outline: medium solid $primary-40;
             outline-offset: 0.125rem;
         }
 
@@ -69,7 +69,7 @@
         );
             width: pxToRem(20);
             height: pxToRem(20);
-            background-color: $primary;
+            background-color: $primary-base;
         }
     }
 
@@ -80,7 +80,7 @@
         }
 
         &:checked + label::after {
-            border: pxToRem(7) solid $primary;
+            border: pxToRem(7) solid $primary-base;
             width: pxToRem(20);
             height: pxToRem(20);
             background-color: #fff;

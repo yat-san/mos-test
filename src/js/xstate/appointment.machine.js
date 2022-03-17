@@ -2,8 +2,14 @@ import {assign, createMachine} from "xstate";
 
 /*
 * Машина для управления компонентом записи на прием.
-* Получает и хранит данные пользователей, которым доступна запись.
+* Начинаем в получения и сохранения данных пользователей, которым доступна запись.
+* При заполнении полей и установке флажков сохраняет их значения и состояния.
+* На сабмит проходит проверка на заполненность полей и наличие флажков.
+* Если нужные поля пусты и флажки не стоят, назначается соответствующий текст ошибки.
 *
+* Когда всё заполнено, форма отправляется, и при получении ответа от сервера
+* об успешной отправке пререходим в состояние показа экрана успеха.
+* На этом этапе можно перейти в исходное состояние и заполнить новую заявку.
 */
 export const appointmentMachine = createMachine({
     id: "appointment",
@@ -11,13 +17,15 @@ export const appointmentMachine = createMachine({
         entries: [],
         currentUser: undefined,
         email: "",
-        emailError: "",
         tel: "",
-        telError: "",
         resident: "fiz",
         terms: false,
-        termsError: "",
         processing: false,
+
+        // Тексты ошибок
+        emailError: "",
+        telError: "",
+        termsError: "",
         processingError: ""
     },
     initial: "loading",
@@ -48,7 +56,6 @@ export const appointmentMachine = createMachine({
         },
         // Данные загружены, можно заполнять форму
         "filling": {
-            entry: "scrollTop",
             initial: "idle",
             on: {
                 "CHANGE_USER": {
@@ -166,10 +173,12 @@ export const appointmentMachine = createMachine({
             "terms": false,
             "processing": false,
         }),
+        /* Прокрутка к началу страницы */
         "scrollTop": () => window.scrollTo(0, 0)
     },
     services: {
         "fetchData": () => {
+            /* Упрощенное получение данных без обработки ошибок */
             return function (send) {
                 fetch("/api/entries", {method: "GET"})
                     .then(response => response.json())
@@ -187,6 +196,8 @@ export const appointmentMachine = createMachine({
                     processingError: ""
                 };
 
+                /* Проверка на заполненность всех необходимых полей
+                * и добавление специфичных ошибок, если input пустой или не чекнут */
                 if (ctx.email === "") {
                     errors.emailError = "Заполните поле Электронная почта";
                 }
@@ -204,11 +215,11 @@ export const appointmentMachine = createMachine({
 
                 if (haveErrors) {
                     send({
-                        type: "INVALID",
-                        data: errors
-                    })
+                        "type": "INVALID",
+                        "data": errors
+                    });
                 } else {
-                    send({type: "VALID"})
+                    send({"type": "VALID"});
                 }
             };
         },
@@ -220,15 +231,14 @@ export const appointmentMachine = createMachine({
                 FD.append("tel", ctx.tel);
                 FD.append("resident", ctx.resident);
 
-                console.log(FD.values());
-
+                /* Упрощенная отправка на сервер без обработки ошибок */
                 fetch("/api/new-appointment", {
                     method: "POST",
                     body: FD
                 })
                     .then(response => response.json())
                     .then(response => {
-                        response.success && send({type: "SENT"});
+                        response.success && send({"type": "SENT"});
                     });
             };
         }

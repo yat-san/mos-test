@@ -18,10 +18,14 @@ $container-max-width: 1408px;
 // Colors
 
 // Brand Colors
-$primary: #0044CC;
-$primaryDark: #0033AA;
-$primaryDarkest: #002277;
-$primaryLight: #6688DD;
+$primary-80: #002277;
+$primary-70: #0033AA;
+$primary-base: #0044CC; //60
+$primary-40: #6688DD;
+$primary-30: #8FB4FF;
+$primary-20: #BBCFFF;
+$primary-10: #DDE7FF;
+$primary-05: #EBF1FF;
 
 $dark: #0E0E0F;
 $grey: #4F4D58;
