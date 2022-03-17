@@ -1,10 +1,15 @@
 import {assign, createMachine} from "xstate";
 
+/*
+* Машина для управления компонентом записи на прием.
+* Получает и хранит данные пользователей, которым доступна запись.
+*
+*/
 export const appointmentMachine = createMachine({
     id: "appointment",
     context: {
         entries: [],
-        currentEntry: undefined,
+        currentUser: undefined,
         email: "",
         emailError: "",
         tel: "",
@@ -17,7 +22,8 @@ export const appointmentMachine = createMachine({
     },
     initial: "loading",
     states: {
-        "loading": { // Loading data from account
+        // Загрузка данных о пользователе.
+        "loading": {
             invoke: {
                 id: "fetchData",
                 src: "fetchData"
@@ -32,6 +38,7 @@ export const appointmentMachine = createMachine({
                 }
             }
         },
+        // Если загрузка данных пользователя не удалась.
         "loading_error": {
             on: {
                 "retry": {
@@ -39,10 +46,15 @@ export const appointmentMachine = createMachine({
                 }
             }
         },
-        "filling": { // Got the data and ready to fill
+        // Данные загружены, можно заполнять форму
+        "filling": {
             entry: "scrollTop",
             initial: "idle",
             on: {
+                "CHANGE_USER": {
+                    actions: ["setUser"],
+                    internal: true
+                },
                 "FILL_EMAIL": {
                     actions: ["saveEmail"],
                     internal: true
@@ -68,7 +80,7 @@ export const appointmentMachine = createMachine({
             },
             states: {
                 idle: {},
-                show_errors: {},
+                show_errors: {}, // Показ ошибок после валидации
             },
         },
         "validating": {
@@ -112,7 +124,11 @@ export const appointmentMachine = createMachine({
 }, {
     actions: {
         "saveEntries": assign({
-            "entries": (ctx, message) => message.data
+            "entries": (ctx, message) => message.data,
+            "currentUser": (ctx, message) => message.data[0].id,
+        }),
+        "setUser": assign({
+            "currentUser": (ctx, message) => message.data
         }),
         "saveResident": assign({
             "resident": (ctx, message) => message.data
@@ -143,7 +159,7 @@ export const appointmentMachine = createMachine({
         }),
         "resetData": assign({
             "entries": [],
-            "currentEntry": undefined,
+            "currentUser": undefined,
             "email": "",
             "tel": "",
             "resident": "fiz",
@@ -196,11 +212,19 @@ export const appointmentMachine = createMachine({
                 }
             };
         },
-        "sendForm": () => {
+        "sendForm": (ctx) => {
             return function (send) {
+                let FD = new FormData();
+                FD.append("user", ctx.currentUser);
+                FD.append("email", ctx.email);
+                FD.append("tel", ctx.tel);
+                FD.append("resident", ctx.resident);
+
+                console.log(FD.values());
+
                 fetch("/api/new-appointment", {
                     method: "POST",
-
+                    body: FD
                 })
                     .then(response => response.json())
                     .then(response => {

@@ -7,6 +7,11 @@ import {SimpleSelect} from "../FormElems/Select/SimpleSelect";
 import {Loader} from "../Loader/Loader";
 import {Icon} from "../SVGsprite/Icon";
 
+/*
+* Запись на прием.
+* Управляется стейт машиной appointmentMachine.
+*/
+
 export function Appointment () {
 
     let [state, send] = useMachine(appointmentMachine);
@@ -27,6 +32,7 @@ export function Appointment () {
                         <Loader label={"Загрузка"}/>
                     </div>
                 }
+
                 {
                     state.matches("filling") &&
                     <span className={"visuallyHidden"}>"Загружено"</span>
@@ -55,6 +61,7 @@ export function Appointment () {
                         errorMsg={state.context.emailError}
                         send={send}
                         sendType={"FILL_EMAIL"}
+                        value={state.context.email}
                     />
                     <TxtInput
                         label={"Телефон"}
@@ -64,6 +71,7 @@ export function Appointment () {
                         errorMsg={state.context.telError}
                         send={send}
                         sendType={"FILL_TEL"}
+                        value={state.context.tel}
                     />
 
 

@@ -1,8 +1,17 @@
 import styles from "./TxtInput.module.scss";
 import {Icon} from "../../SVGsprite/Icon";
 import clsx from "clsx";
+import {useEffect} from "react";
 
 export function TxtInput (props) {
+
+    let handleInput = function (event) {
+        props.send({
+            type: props.sendType,
+            data: event.target.value
+        });
+    };
+
     return (
         <div className={clsx("formGroup", styles.txtInputRow)}>
             <label htmlFor={props.id}>
@@ -27,15 +36,8 @@ export function TxtInput (props) {
                 name={props.name}
                 id={props.id}
                 type={props.type || "text"}
-                defaultValue={props.value}
-                onChange={
-                    (event) => {
-                        props.send({
-                            type: props.sendType,
-                            data: event.target.value
-                        })
-                    }
-                }
+                value={props.value}
+                onChange={(event) => handleInput(event)}
             />
         </div>
     );

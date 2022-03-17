@@ -25,12 +25,14 @@ export function SimpleSelect (props) {
                 name={props.name}
                 id={props.id}
                 onChange={
-                    (event) => props.send(
-                        {
-                            type: props.type,
-                            data: event.target.value
-                        }
-                    )
+                    (event) => {
+                        props.send(
+                            {
+                                type: props.type,
+                                data: event.target.value
+                            }
+                        );
+                    }
                 }
             >
                 {
