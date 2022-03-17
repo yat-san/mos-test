@@ -1,0 +1,12 @@
+@use "sass:math";
+@use "../../../scss/util/variables" as *;
+@use "../../../scss/util/functions" as *;
+
+.footer {
+    background-color: $dark;
+    color: #ffffff;
+    height: 40px;
+    padding: 0 33px;
+    display: flex;
+    align-items: center;
+}

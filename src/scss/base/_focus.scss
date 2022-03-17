@@ -1,0 +1,18 @@
+@use "sass:math";
+@import "../util/functions";
+@import "../util/variables";
+
+*:focus {
+    outline: medium solid $primaryLight;
+    border-radius: pxToRem(4);
+}
+
+
+// =================
+// EXCEPTIONS
+// =================
+
+// sections excluded from the tabindex
+[tabindex='-1']:focus {
+    outline: none !important;
+}

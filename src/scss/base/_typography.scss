@@ -1,0 +1,99 @@
+@import "../util/functions";
+@import "../util/variables";
+
+body {
+    font-family: $ff-base;
+    font-size: 16px;
+    line-height: $line-height;
+    text-rendering: optimizeLegibility;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5 {
+    line-height: 1.25;
+    margin: 0 0 0.3em;
+    position: relative;
+}
+
+h1, .h1 {
+    font-size: pxToRem(26);
+    font-weight: 700;
+    margin-bottom: pxToEm(56, 32);
+
+    @media (min-width: $desktop) {
+        font-size: pxToRem(32);
+    }
+}
+
+h2, .h2 {
+    font-size: pxToRem(24);
+    font-weight: 600;
+    margin: 0 0 pxToEm(24, 26);
+
+    @media (min-width: $desktop) {
+        font-size: pxToRem(26);
+    }
+}
+
+/*h3, .h3 {
+    font-size: pxToRem(22);
+    font-weight: 600;
+
+    @media (min-width: $medium) {
+        font-size: pxToRem(22);
+    }
+}
+*/
+
+p {
+    margin: 0 0 1em;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.note {
+    color: $grey;
+    font-size: pxToRem(14);
+    font-weight: 400;
+}
+
+a {
+    color: $primary;
+
+    &:hover, &:active {
+        color: $primaryDark;
+    }
+}
+
+// Text Utilities
+
+.textLeft {
+    text-align: left !important;
+}
+
+.textCenter {
+    text-align: center !important;
+}
+
+.textRight {
+    text-align: right !important;
+}
+
+.textBold {
+    font-weight: 600;
+}
+
+.textMedium {
+    font-weight: 500;
+}

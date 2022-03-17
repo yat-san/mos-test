@@ -1,0 +1,24 @@
+@use "sass:math";
+@use "../../../../scss/util/variables" as *;
+@use "../../../../scss/util/functions" as *;
+
+.txtInputRow {
+    margin: pxToRem(24) 0;
+
+    @media (min-width: $medium) {
+        margin: 2rem 0;
+    }
+
+    label {
+        display: block;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.errorField {
+    border-color: $error;
+}
+

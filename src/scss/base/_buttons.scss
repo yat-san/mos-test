@@ -1,0 +1,54 @@
+@use "sass:math";
+@import "../util/functions";
+@import "../util/variables";
+
+.btn, button {
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    font-weight: 500;
+    height: pxToRem(48);
+    justify-content: center;
+    line-height: 1;
+    max-width: 100%;
+    min-height: 48px;
+    min-width: 48px;
+    outline: none;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    white-space: nowrap;
+    width: max-content;
+
+    &:hover, &:active {
+        text-decoration: none;
+    }
+
+    &Primary {
+        background-color: $primary;
+        border-color: $primary;
+        border-radius: pxToRem(4);
+        color: #fff;
+        height: pxToRem(48);
+        padding: 0 pxToRem(32);
+        width: 100%;
+
+        @media (min-width: $medium) {
+            width: max-content;
+        }
+
+        &:hover {
+            background-color: $primaryDark;
+        }
+
+        &:active {
+            background-color: $primaryDarkest;
+        }
+    }
+}

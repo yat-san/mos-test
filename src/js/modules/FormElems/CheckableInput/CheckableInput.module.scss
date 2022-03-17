@@ -1,0 +1,89 @@
+@use "sass:math";
+@use "../../../../scss/util/variables" as *;
+@use "../../../../scss/util/functions" as *;
+
+.checkableInput {
+    margin: 1rem 0;
+    position: relative;
+    border-radius: 4px;
+
+    /*&:focus-within {
+        outline: medium solid $primaryLight;
+        outline-offset: 0.25rem;
+    }*/
+
+    label {
+        border-radius: 4px;
+        padding-left: 2rem;
+        position: relative;
+        user-select: none;
+
+        &::before, &::after {
+            content: "";
+            height: pxToRem(20);
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: pxToRem(20);
+            box-sizing: border-box;
+        }
+
+        &::before {
+            border: 1px solid $greyLight;
+        }
+    }
+
+    input {
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        min-height: 100%;
+
+        &:checked label::before {
+            border-color: $primary;
+        }
+
+        &:focus + label::before {
+            outline: medium solid $primaryLight;
+            outline-offset: 0.125rem;
+        }
+
+        &.errorField {
+            border-color: $error;
+
+            & + label::before {
+                border-color: $error;
+            }
+        }
+    }
+
+    [type="checkbox"] {
+        & + label::before,
+        & + label::after {
+            border-radius: pxToRem(4);
+        }
+
+        &:checked + label::after {
+            background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.13295 10.4414C4.95568 10.2534 4.95568 9.94744 5.13295 9.75744L5.77568 9.07444C5.95295 8.88644 6.24113 8.88644 6.4184 9.07444L8.63657 11.4664L13.5811 6.14144C13.7584 5.95344 14.0465 5.95344 14.2238 6.14144L14.8665 6.82544C15.0438 7.01344 15.0438 7.32044 14.8665 7.50744L8.95748 13.8584C8.78021 14.0464 8.49203 14.0464 8.31476 13.8584L5.13295 10.4414Z' fill='white'/%3E%3C/svg%3E"
+        );
+            width: pxToRem(20);
+            height: pxToRem(20);
+            background-color: $primary;
+        }
+    }
+
+    [type="radio"] {
+        & + label::before,
+        & + label::after {
+            border-radius: 50%;
+        }
+
+        &:checked + label::after {
+            border: pxToRem(7) solid $primary;
+            width: pxToRem(20);
+            height: pxToRem(20);
+            background-color: #fff;
+        }
+    }
+}

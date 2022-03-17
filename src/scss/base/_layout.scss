@@ -1,0 +1,125 @@
+@use "sass:math";
+@import "../util/functions";
+@import "../util/variables";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #ced0d2;
+    color: $dark;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Avoid Chrome to see Safari hack */
+@supports (-webkit-touch-callout: none) {
+    body {
+        /* The hack for Safari */
+        min-height: -webkit-fill-available;
+    }
+}
+
+#root {
+    display: grid;
+    grid-template-areas: "header"
+                        "main"
+                        "footer";
+    grid-template-rows: 40px auto 40px;
+    min-height: 100vh;
+    max-width: 1600px;
+    margin: 0 auto;
+    background-color: #fff;
+
+    @supports (-webkit-touch-callout: none) {
+        min-height: -webkit-fill-available;
+    }
+}
+
+.wrapper {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+
+    @media (min-width: 375px) {
+        padding: 0 33px;
+    }
+
+    @media (min-width: $desktop) {
+        padding: 0;
+        width: 97%;
+    }
+}
+
+.skipLink {
+    left: 1rem;
+    top: -100rem;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    background-color: #fff;
+    color: $dark;
+    border: 0;
+    padding: 1rem;
+    border-radius: pxToRem(4);
+
+    &:focus {
+        opacity: 1;
+        top: 1.5rem;
+        z-index: 100;
+        outline: 2px solid $primary;
+        outline-offset: 0;
+    }
+}
+
+.visuallyHidden {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+    clip-path: inset(0px 0px 99.9% 99.9%);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0
+}
+
+img, svg {
+    display: block;
+    max-width: 100%;
+}
+
+ul, ol {
+    padding-left: 1rem;
+    margin: 1rem 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    li {
+        margin: 0.25rem 0;
+    }
+}
+
+hr {
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: $greyLight;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    color: $error;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+
+    img, svg {
+        margin-right: 0.5rem;
+    }
+}

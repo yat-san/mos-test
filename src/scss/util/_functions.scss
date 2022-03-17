@@ -1,0 +1,11 @@
+@use "sass:math";
+
+/* Calc size in rem */
+@function pxToRem($px) {
+    @return math.div($px, 16)*1rem;
+}
+
+/* Calc line height */
+@function  pxToEm($px, $ref) {
+    @return math.div($px, $ref)*1em;
+}

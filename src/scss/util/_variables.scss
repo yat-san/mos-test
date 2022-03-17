@@ -1,0 +1,64 @@
+@use "./functions" as *;
+
+//--------------------
+// SCSS VARIABLES
+//--------------------
+
+// Grid breakpoints
+//
+// Define the minimum and maximum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$big: 1440px;
+$desktop: 1152px;
+$medium: 768px;
+
+$container-max-width: 1408px;
+
+// Colors
+
+// Brand Colors
+$primary: #0044CC;
+$primaryDark: #0033AA;
+$primaryDarkest: #002277;
+$primaryLight: #6688DD;
+
+$dark: #0E0E0F;
+$grey: #4F4D58;
+$greyLight: #C4C8D0;
+$success: #008844;
+$error: #AA0000;
+
+$brand: #CC2222;
+
+$gradientOrange: linear-gradient(90deg, #EF8827 0%, #FFC42C 100%);
+$gradientRed: linear-gradient(201.28deg, #D02239 0%, #FF5C66 98.68%);
+
+// Color Mappings
+
+$bg-color: #fff;
+$text-color: $dark;
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$ff-sans-serif: "Golos Text", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$ff-monospace: Menlo, Monaco, Consolas, "Andale Mono", "Courier New",
+monospace;
+$ff-base: $ff-sans-serif;
+
+$font-size-root: 100%;
+$line-height: 1.5;
+
+// Animation
+//
+// Default easing curves, Transitions, etc
+
+$animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1);
+$animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1);
+$animation-curve-default: $animation-curve-fast-out-slow-in;
+
+//Offsets
+$py: pxToRem(32);

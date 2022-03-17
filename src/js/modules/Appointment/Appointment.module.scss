@@ -1,0 +1,10 @@
+@use "sass:math";
+@use "../../../scss/util/variables" as *;
+@use "../../../scss/util/functions" as *;
+
+.appointment {
+    padding: 2rem 0;
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+}
