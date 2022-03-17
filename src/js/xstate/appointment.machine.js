@@ -101,6 +101,7 @@ export const appointmentMachine = createMachine({
             }
         },
         "success": {
+            entry: ["resetData"],
             on: {
                 "ONE_MORE": {
                     target: "loading"

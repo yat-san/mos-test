@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 export function Header () {
     return (
         <header role="banner" className={styles.header}>
-            <div className={styles.logo}>
+            <a href={"/"} className={styles.logo}>
                 <svg width="16" height="24" xmlns="http://www.w3.org/2000/svg" role={"presentation"}>
                     <g fill="none" fillRule="evenodd">
                         <path d="M0 0h16v24H0z"/>
@@ -13,7 +13,7 @@ export function Header () {
                     </g>
                 </svg>
                 mos.ru
-            </div>
+            </a>
         </header>
     );
 }

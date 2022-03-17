@@ -6,8 +6,9 @@ function App () {
 
     return (
         <>
+            <a href="#main" className={"skipLink"}>Перейти к основному контенту</a>
             <Header/>
-            <main>
+            <main id={"main"}>
                 <div className="wrapper">
                     <Appointment/>
                 </div>
