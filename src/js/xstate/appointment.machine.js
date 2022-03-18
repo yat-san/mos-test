@@ -87,7 +87,12 @@ export const appointmentMachine = createMachine({
             },
             states: {
                 idle: {},
-                show_errors: {}, // Показ ошибок после валидации
+                show_errors: { // Показ ошибок после валидации
+                    invoke: {
+                        id: "focusOnFirstErr",
+                        src: "focusOnFirstErr",
+                    }
+                },
             },
         },
         "validating": {
@@ -138,19 +143,23 @@ export const appointmentMachine = createMachine({
             "currentUser": (ctx, message) => message.data
         }),
         "saveResident": assign({
-            "resident": (ctx, message) => message.data
+            "resident": (ctx, message) => message.data,
         }),
         "saveEmail": assign({
-            "email": (ctx, message) => message.data
+            "email": (ctx, message) => message.data,
+            "emailError": ""
         }),
         "saveTel": assign({
-            "tel": (ctx, message) => message.data
+            "tel": (ctx, message) => message.data,
+            "telError": ""
         }),
         "saveTermsState": assign({
-            "terms": (ctx) => !ctx.terms
+            "terms": (ctx) => !ctx.terms,
+            "termsError": ""
         }),
         "saveProcState": assign({
-            "processing": (ctx) => !ctx.processing
+            "processing": (ctx) => !ctx.processing,
+            "processingError": ""
         }),
         "saveErrors": assign({
             "emailError": (ctx, message) => message.data.emailError,
@@ -174,7 +183,7 @@ export const appointmentMachine = createMachine({
             "processing": false,
         }),
         /* Прокрутка к началу страницы */
-        "scrollTop": () => window.scrollTo(0, 0)
+        "scrollTop": () => window.scrollTo(0, 0),
     },
     services: {
         "fetchData": () => {
@@ -222,6 +231,19 @@ export const appointmentMachine = createMachine({
                     send({"type": "VALID"});
                 }
             };
+        },
+        "focusOnFirstErr": () => {
+            /* Фокус на первое поле с ошибкой */
+            let delay = setTimeout(
+                () => {
+                    let errField = document.querySelector("[class*='errorField']");
+
+                    errField?.focus();
+
+                    clearTimeout(delay);
+                }, 150
+            );
+
         },
         "sendForm": (ctx) => {
             return function (send) {

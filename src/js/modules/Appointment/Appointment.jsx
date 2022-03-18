@@ -14,7 +14,7 @@ import {Button} from "../Button/Button";
 * Управляется стейт машиной appointmentMachine.
 * Показ лоадера в момент получения данных.
 * Форма, когда данные получены.
-* Показ ошибок, если есть. Ошибки сбрасываются только при отправке на валидацию.
+* Показ ошибок, если есть. Ошибки сбрасываются на onChange у каждого поля отдельно.
 * Экран успеха. Кнопка "Заново" перезагружает страницу.
 * Как следствие, всё возвращается в исходное состояние.
 *
@@ -28,13 +28,6 @@ export function Appointment () {
         event.preventDefault();
         send({type: "SUBMIT"});
     };
-
-    useEffect(() => {
-        /* Если мы в состоянии "показать ошибки", ставим фокус на первое поле с ошибкой */
-        if (state.matches("filling.show_errors")) {
-            document.querySelector("[class*='errorField']")?.focus();
-        }
-    });
 
     return (
         <div className={styles.appointment}>
